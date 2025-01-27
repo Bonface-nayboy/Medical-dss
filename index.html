@@ -10,12 +10,22 @@
   <div class="min-h-screen flex flex-col">
     <nav class="bg-blue-500 shadow-md p-4">
       <div class="flex justify-between items-center">
-        
-        <ul class="flex justify-center space-x-6 text-white-600 font-medium hidden md:flex">
-          <li><a href="index.html" class="hover:underline">Home</a></li>
-          <li><a href="Medical/about.html" class="hover:underline">About</a></li>
-          <li><a href="Medical/contact.html" class="hover:underline">Contact</a></li>
-          <li><a href="Medical/record.html" class="hover:underline">Records</a></li>
+        <div class="flex justify-between items-center w-full">
+          <ul class="flex justify-center space-x-6 text-white-600 font-medium hidden md:flex">
+            <li><a href="index.html" class="hover:underline">Home</a></li>
+            <li><a href="Medical/about.html" class="hover:underline">About</a></li>
+            <li><a href="Medical/contact.html" class="hover:underline">Contact</a></li>
+            <li><a href="Medical/record.html" class="hover:underline">Records</a></li>
+          </ul>
+          <button id="mobile-menu-button" class="block md:hidden text-white focus:outline-none">☰</button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden">
+        <ul class="flex flex-col space-y-2 mt-2">
+          <li><a href="index.html" class="block hover:underline text-white">Home</a></li>
+          <li><a href="Medical/about.html" class="block hover:underline text-white">About</a></li>
+          <li><a href="Medical/contact.html" class="block hover:underline text-white">Contact</a></li>
+          <li><a href="Medical/record.html" class="block hover:underline text-white">Records</a></li>
         </ul>
       </div>
     </nav>
@@ -26,18 +36,17 @@
     </header>
 
     <main class="flex-grow flex flex-col items-center p-4">
-      <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-9xl">
+      <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
         <div class="flex flex-col md:flex-row items-center justify-between">
-          <div class="flex-1 mb-6 md:mb-0">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq7at82dcfB_5BEgyUBvMVTxa5JXUePfWhIw&s" alt="Healthcare Image" class="w-full rounded-lg mb-4 md:mb-0">
+          <div class="flex-1 mb-4 md:mb-0">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq7at82dcfB_5BEgyUBvMVTxa5JXUePfWhIw&s" alt="Healthcare Image" class="w-full h-auto rounded-lg mb-4 md:mb-0">
           </div>
           <div class="flex-1 text-center md:text-left">
-            <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Healthcare Decision Support System</h2>
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Healthcare Decision Support System</h2>
             <p class="text-gray-600 text-center mb-6">Enter your symptoms below to receive possible diagnoses and solutions.</p>
 
-            <!-- Symptoms Input Form -->
-            <form id="dss-form" class="space-y-4 ml-40 flex items-center">
-              <div class="flex-1">
+            <form id="dss-form" class="space-y-4 ml-2 flex flex-col md:flex-row items-center">
+              <div class="flex-1 mb-2 md:mb-0">
                 <label for="symptoms" class="block text-gray-700 font-medium">Symptoms (comma-separated):</label>
                 <input
                   type="text"
@@ -46,7 +55,7 @@
                   placeholder="e.g., fever, headache, nausea"
                 />
               </div>
-              <button  type="button" id="menu-button" class="ml-4 bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600">
+              <button type="button" id="menu-button" class="bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600">
                 Menu
               </button>
             </form>
@@ -59,7 +68,6 @@
               Get Diagnosis
             </button>
 
-            <!-- Symptom Menu Dropdown (Initially hidden) -->
             <div id="symptom-menu" class="bg-purple-500 text-white text-center p-4 mt-2 hidden">
               <ul class="space-y-2">
                 <li><a href="#" class="block hover:underline symptom-item" data-symptom="fever">Fever</a></li>
@@ -72,7 +80,6 @@
           </div>
         </div>
 
-        <!-- Results Section -->
         <div id="results" class="mt-6 hidden">
           <h2 class="text-xl font-bold mb-4 text-green-600">Possible Diagnoses:</h2>
           <ul id="diagnosis-list" class="list-disc list-inside space-y-2 text-gray-700"></ul>
@@ -80,13 +87,12 @@
         </div>
       </div>
 
-      <!-- Common Health Issues Section -->
       <div class="w-full p-4 mt-2">
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Common Health Issues</h2>
         
-        <div class="flex flex-wrap gap-12">
+        <div class="flex flex-col md:flex-row gap-4">
           <!-- Card: Cancer -->
-          <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/3 flex flex-col h-full">
+          <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/4 flex flex-col h-full">
             <h3 class="text-xl font-bold text-purple-600">Cancer</h3>
             <p class="text-gray-600">A disease caused by uncontrolled division of abnormal cells.</p>
             <ul class="list-disc list-inside text-gray-700 mt-2 flex-grow">
@@ -95,7 +101,7 @@
               <li><strong>What to Do:</strong> Seek medical advice, consider treatments like chemotherapy.</li>
             </ul>
           </div>
-        
+
           <!-- Card: HIV -->
           <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/4 flex flex-col h-full">
             <h3 class="text-xl font-bold text-purple-500">HIV/AIDS</h3>
@@ -106,7 +112,7 @@
               <li><strong>What to Do:</strong> Consult a healthcare provider, follow prescribed treatments.</li>
             </ul>
           </div>
-        
+
           <!-- Card: Diabetes -->
           <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/4 flex flex-col h-full">
             <h3 class="text-xl font-bold text-purple-500">Diabetes</h3>
@@ -119,23 +125,20 @@
           </div>
         </div>
       </div>
-  
+
     </main>
 
     <footer class="bg-gray-800 text-white text-center py-4">
       <p class="text-sm">Quick Solutions for Common Problems:</p>
-      <ul class="flex justify-between w-full px-6">
-        <!-- Left Items -->
+      <ul class="flex flex-col md:flex-row justify-between w-full px-6 space-y-2 md:space-y-0">
         <div class="flex flex-col space-y-1">
           <li>Practice good hygiene to prevent infections.</li>
           <li>Stay hydrated and get plenty of rest.</li>
         </div>
-        <!-- Center Items -->
         <div class="flex flex-col space-y-1">
           <li>Maintain a healthy diet and exercise regularly.</li>
           <li>Consult a doctor for persistent symptoms.</li>
         </div>
-        <!-- Right Items (Empty or you can add more if needed) -->
         <div class="flex flex-col space-y-1">
           <li>Wash hands regularly, especially before eating.</li>
           <li>Avoid smoking and limit alcohol consumption.</li>
@@ -143,13 +146,18 @@
       </ul>
       <p class="text-xs mt-2">&copy; 2025 Healthcare DSS. All rights reserved.</p>
     </footer>
-    
   </div>
 
   <script>
     // Toggle menu visibility
     document.getElementById('menu-button').addEventListener('click', function() {
       const menu = document.getElementById('symptom-menu');
+      menu.classList.toggle('hidden');
+    });
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
       menu.classList.toggle('hidden');
     });
 
@@ -164,7 +172,7 @@
       });
     });
 
-    // Possible diagnosis data
+    // Diagnosis data
     const diagnosisData = {
       fever: ['Flu', 'COVID-19', 'Malaria'],
       headache: ['Migraine', 'Tension Headache', 'Sinus Infection'],
@@ -173,7 +181,6 @@
       fatigue: ['Anemia', 'Chronic Fatigue Syndrome', 'Thyroid Disorders']
     };
 
-    // DOM Elements
     const diagnoseButton = document.getElementById('diagnose-button');
     const resultsSection = document.getElementById('results');
     const diagnosisList = document.getElementById('diagnosis-list');
