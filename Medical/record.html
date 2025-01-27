@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Records | Healthcare Decision Support System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <div class="min-h-screen flex flex-col">
+    <nav class="bg-blue-500 shadow-md p-4">
+      <div class="flex justify-between items-center">
+        <ul class="flex justify-center space-x-6 text-white-600 font-medium hidden md:flex">
+          <li><a href="index.html" class="hover:underline">Home</a></li>
+          <li><a href="about.html" class="hover:underline">About</a></li>
+          <li><a href="contact.html" class="hover:underline">Contact</a></li>
+          <li><a href="records.html" class="hover:underline">Records</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="bg-white text-black text-center py-6">
+      <h1 class="text-3xl font-bold">Patient Diagnosis Records</h1>
+      <p class="text-lg">Manage and visualize patient diagnosis records</p>
+    </header>
+
+    <main class="flex-grow p-6">
+      <!-- Records Table -->
+      <section class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 class="text-2xl font-bold text-blue-600 mb-4">Patient Records</h2>
+        <button id="addRecordBtn" class="bg-blue-500 text-white py-2 px-4 rounded-lg mb-4">Add New Record</button>
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="py-2 px-4 border">Patient Name</th>
+              <th class="py-2 px-4 border">Diagnosis</th>
+              <th class="py-2 px-4 border">Date</th>
+              <th class="py-2 px-4 border">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTableBody">
+            <!-- Records will be populated dynamically -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Bar Chart Section -->
+      <!-- Bar Chart Section -->
+<section class="bg-white p-2 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-blue-600 mb-4">Symptoms Distribution</h2>
+    <!-- Set the width and height of the canvas to make it smaller -->
+    <canvas id="symptomsBarChart" width="100" height="40"></canvas>
+  </section>
+  
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+      <p class="text-sm">&copy; 2025 Healthcare DSS. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Add / Update Record Modal -->
+  <div id="recordModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h3 class="text-2xl font-bold text-blue-600 mb-4" id="modalTitle">Add New Record</h3>
+      <form id="recordForm">
+        <div class="mb-4">
+          <label for="patientName" class="block text-gray-700">Patient Name</label>
+          <input type="text" id="patientName" class="w-full border border-gray-300 rounded-lg p-2" required>
+        </div>
+        <div class="mb-4">
+          <label for="diagnosis" class="block text-gray-700">Diagnosis</label>
+          <input type="text" id="diagnosis" class="w-full border border-gray-300 rounded-lg p-2" required>
+        </div>
+        <div class="mb-4">
+          <label for="date" class="block text-gray-700">Date</label>
+          <input type="date" id="date" class="w-full border border-gray-300 rounded-lg p-2" required>
+        </div>
+        <div class="mb-4">
+          <label for="symptoms" class="block text-gray-700">Symptoms (comma-separated)</label>
+          <input type="text" id="symptoms" class="w-full border border-gray-300 rounded-lg p-2" placeholder="e.g. Fever, Cough, Headache">
+        </div>
+        <div class="flex justify-end space-x-4">
+          <button type="button" id="cancelBtn" class="bg-gray-500 text-white py-2 px-4 rounded-lg">Cancel</button>
+          <button type="submit" id="submitBtn" class="bg-blue-500 text-white py-2 px-4 rounded-lg">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Simulated records data
+    let records = [
+      { patientName: 'John Doe', diagnosis: 'Flu', date: '2025-01-15', symptoms: ['Fever', 'Cough'] },
+      { patientName: 'Jane Smith', diagnosis: 'Cold', date: '2025-01-10', symptoms: ['Runny Nose', 'Sneezing'] },
+      { patientName: 'Tom Hanks', diagnosis: 'Covid-19', date: '2025-01-20', symptoms: ['Fever', 'Cough', 'Fatigue'] }
+    ];
+
+    // Function to update the records table
+    function updateRecordsTable() {
+      const tableBody = document.getElementById('recordsTableBody');
+      tableBody.innerHTML = '';
+      records.forEach((record, index) => {
+        const row = document.createElement('tr');
+        row.classList.add('text-center');
+        row.innerHTML = `
+          <td class="py-2 px-4 border">${record.patientName}</td>
+          <td class="py-2 px-4 border">${record.diagnosis}</td>
+          <td class="py-2 px-4 border">${record.date}</td>
+          <td class="py-2 px-4 border">
+            <button class="bg-green-500 text-white px-4 py-1 rounded-lg mr-2" onclick="editRecord(${index})">Edit</button>
+            <button class="bg-red-500 text-white px-4 py-1 rounded-lg" onclick="deleteRecord(${index})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Function to add a new record
+    function addRecord(record) {
+      records.push(record);
+      updateRecordsTable();
+      updateSymptomsBarChart();
+    }
+
+    // Function to edit a record
+    function editRecord(index) {
+      const record = records[index];
+      document.getElementById('modalTitle').innerText = 'Edit Record';
+      document.getElementById('patientName').value = record.patientName;
+      document.getElementById('diagnosis').value = record.diagnosis;
+      document.getElementById('date').value = record.date;
+      document.getElementById('symptoms').value = record.symptoms.join(', ');
+      document.getElementById('submitBtn').onclick = function () {
+        const updatedRecord = {
+          patientName: document.getElementById('patientName').value,
+          diagnosis: document.getElementById('diagnosis').value,
+          date: document.getElementById('date').value,
+          symptoms: document.getElementById('symptoms').value.split(',').map(symptom => symptom.trim())
+        };
+        records[index] = updatedRecord;
+        updateRecordsTable();
+        updateSymptomsBarChart();
+        closeModal();
+      };
+      openModal();
+    }
+
+    // Function to delete a record
+    function deleteRecord(index) {
+      records.splice(index, 1);
+      updateRecordsTable();
+      updateSymptomsBarChart();
+    }
+
+    // Function to handle form submit (Add/Edit Record)
+    document.getElementById('recordForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const newRecord = {
+        patientName: document.getElementById('patientName').value,
+        diagnosis: document.getElementById('diagnosis').value,
+        date: document.getElementById('date').value,
+        symptoms: document.getElementById('symptoms').value.split(',').map(symptom => symptom.trim())
+      };
+      addRecord(newRecord);
+      closeModal();
+    });
+
+    // Modal open/close functions
+    function openModal() {
+      document.getElementById('recordModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('recordModal').classList.add('hidden');
+    }
+
+    // Close modal on cancel
+    document.getElementById('cancelBtn').onclick = closeModal;
+
+    // Function to update symptoms bar chart
+    function updateSymptomsBarChart() {
+      const symptomCounts = {};
+      records.forEach(record => {
+        record.symptoms.forEach(symptom => {
+          symptomCounts[symptom] = (symptomCounts[symptom] || 0) + 1;
+        });
+      });
+
+      const labels = Object.keys(symptomCounts);
+      const data = Object.values(symptomCounts);
+
+      const ctx = document.getElementById('symptomsBarChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Symptoms Distribution',
+            data: data,
+            backgroundColor: '#1E88E5',
+            borderColor: '#388E3C',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Initialize table and chart on page load
+    window.onload = function () {
+      updateRecordsTable();
+      updateSymptomsBarChart();
+    };
+  </script>
+
+</body>
+</html>
