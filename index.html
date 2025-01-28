@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Healthcare Decision Support System</title>
+  <title>St. Gabriel Mission Hospital</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
   <div class="min-h-screen flex flex-col">
@@ -29,7 +30,7 @@
     </nav>
 
     <header class="bg-white text-black text-center py-6">
-      <h1 class="text-3xl font-bold">Welcome to the Healthcare Decision Support System</h1>
+      <h1 class="text-3xl font-bold">Welcome to St. Gabriel Mission Hospital</h1>
       <p class="text-lg">Your trusted companion for quick and accurate medical guidance.</p>
     </header>
 
@@ -40,7 +41,7 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq7at82dcfB_5BEgyUBvMVTxa5JXUePfWhIw&s" alt="Healthcare Image" class="w-full h-auto rounded-lg mb-4 md:mb-0">
           </div>
           <div class="flex-1 text-center md:text-left">
-            <h2 class="text-2xl font-bold mb-4 text-blue-600">Healthcare Decision Support System</h2>
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">St. Gabriel Mission Hospital</h2>
             <p class="text-gray-600 text-center mb-6">Enter your symptoms below to receive possible diagnoses and solutions.</p>
 
             <form id="dss-form" class="space-y-4 ml-2 flex flex-col md:flex-row items-center">
@@ -83,7 +84,99 @@
           <ul id="diagnosis-list" class="list-disc list-inside space-y-2 text-gray-700"></ul>
           <p class="text-gray-600 mt-4">For severe or persistent symptoms, please visit your nearest healthcare center for professional assistance.</p>
         </div>
+
+        <div class="bg-blue-100 text-blue-600 p-4 mt-6 rounded-lg">
+            <h2 class="text-lg font-bold">SHA (NHIF) Services:</h2>
+            <p class="mt-2">The NHIF provides financial coverage for consultations and treatments, enabling you to access healthcare services easily.</p>
+            <h3 class="font-semibold mt-4">NHIF Benefits:</h3>
+            <ul class="list-disc list-inside mt-2">
+              <li>Inpatient and outpatient services coverage.</li>
+              <li>Access to a wide range of healthcare providers and facilities.</li>
+              <li>Preventive healthcare services to promote overall wellness.</li>
+              <li>Support for both chronic and acute care needs.</li>
+            </ul>
+            <p class="mt-4">To learn more about how to enroll and utilize your NHIF benefits, visit your nearest NHIF office or check their website.</p>
+            <div id="tip" class="mt-4 text-lg font-bold"></div>
+          </div>
+          
+          <script>
+            const tips = [
+              "Did you know? NHIF covers a wide range of outpatient services, including consultations and treatments.",
+              "Tip: Enrolling in NHIF not only gives you medical coverage but also protects your family.",
+              "Interesting Fact: NHIF supports over 9 million members with various health services across the country.",
+              "Reminder: Always carry your NHIF card when visiting a healthcare facility to enjoy benefits.",
+              "Health Check: Regular check-ups are essential! NHIF promotes preventive health services to keep you healthy."
+            ];
+          
+            // Function to randomly select a tip
+            function showRandomTip() {
+              const randomIndex = Math.floor(Math.random() * tips.length);
+              const tipElement = document.getElementById('tip');
+              tipElement.textContent = tips[randomIndex];
+            }
+          
+            // Automatically show a random tip on page load
+            showRandomTip();
+          </script>
+          
       </div>
+
+      <div class="w-full p-4 mt-6">
+        <h2 class="text-2xl font-bold text-blue-600 mb-4">Common Health Issues in Kenyan Provinces</h2>
+        <canvas id="healthIssuesChart" class="w-full h-64"></canvas>
+      </div>
+
+      <script>
+        const ctx = document.getElementById('healthIssuesChart').getContext('2d');
+        const healthIssuesChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Nairobi', 'Central', 'Coast', 'Eastern', 'North Eastern','Nyanza','Rift Valley','Western'],
+            datasets: [
+              {
+                label: 'HIV',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                data: [10, 20, 15, 5, 10, 15, 20, 10],
+              },
+              {
+                label: 'Cancer',
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                data: [15, 10, 5, 20, 15, 5, 9, 10],
+              },
+              {
+                label: 'Diabetes',
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                data: [5, 15, 10, 10, 20, 10, 7, 15],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Cases'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Health Issues by Province'
+              }
+            }
+          }
+        });
+      </script>
 
       <div class="w-full p-4 mt-2">
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Common Health Issues</h2>
@@ -123,7 +216,6 @@
           </div>
         </div>
       </div>
-
     </main>
 
     <footer class="bg-gray-800 text-white text-center py-4">
@@ -142,7 +234,7 @@
           <li>Avoid smoking and limit alcohol consumption.</li>
         </div>
       </ul>
-      <p class="text-xs mt-2">&copy; 2025 Healthcare DSS. All rights reserved.</p>
+      <p class="text-xs mt-2">&copy; 2025 St. Gabriel Mission Hospital. All rights reserved.</p>
     </footer>
   </div>
 
