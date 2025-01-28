@@ -102,44 +102,42 @@
         </div>
 
         <div class="bg-blue-100 text-blue-600 p-4 mt-6 rounded-lg">
-            <h2 class="text-lg font-bold">SHA (NHIF) Services:</h2>
-            <p class="mt-2">The NHIF provides financial coverage for consultations and treatments, enabling you to access healthcare services easily.</p>
-            <h3 class="font-semibold mt-4">NHIF Benefits:</h3>
-            <ul class="list-disc list-inside mt-2">
-              <li>Inpatient and outpatient services coverage.</li>
-              <li>Access to a wide range of healthcare providers and facilities.</li>
-              <li>Preventive healthcare services to promote overall wellness.</li>
-              <li>Support for both chronic and acute care needs.</li>
-            </ul>
-            <p class="mt-4">To learn more about how to enroll and utilize your NHIF benefits, visit your nearest NHIF office or check their website.</p>
-            <div id="tip" class="mt-4 text-lg font-bold"></div>
-          </div>
+          <h2 class="text-lg font-bold">SHA (NHIF) Services:</h2>
+          <p class="mt-2">The NHIF provides financial coverage for consultations and treatments, enabling you to access healthcare services easily.</p>
+          <h3 class="font-semibold mt-4">NHIF Benefits:</h3>
+          <ul class="list-disc list-inside mt-2">
+            <li>Inpatient and outpatient services coverage.</li>
+            <li>Access to a wide range of healthcare providers and facilities.</li>
+            <li>Preventive healthcare services to promote overall wellness.</li>
+            <li>Support for both chronic and acute care needs.</li>
+          </ul>
+          <p class="mt-4">To learn more about how to enroll and utilize your NHIF benefits, visit your nearest NHIF office or check their website.</p>
+          <div id="tip" class="mt-4 text-lg font-bold"></div>
+        </div>
 
-          <script>
-            const tips = [
-              "Did you know? NHIF covers a wide range of outpatient services, including consultations and treatments.",
-              "Tip: Enrolling in NHIF not only gives you medical coverage but also protects your family.",
-              "Interesting Fact: NHIF supports over 9 million members with various health services across the country.",
-              "Reminder: Always carry your NHIF card when visiting a healthcare facility to enjoy benefits.",
-              "Health Check: Regular check-ups are essential! NHIF promotes preventive health services to keep you healthy."
-            ];
-          
-            // Function to randomly select a tip
-            function showRandomTip() {
-              const randomIndex = Math.floor(Math.random() * tips.length);
-              const tipElement = document.getElementById('tip');
-              tipElement.textContent = tips[randomIndex];
-            }
-          
-            // Automatically show a random tip on page load
-            showRandomTip();
-          </script>
-          
+        <script>
+          const tips = [
+            "Did you know? NHIF covers a wide range of outpatient services, including consultations and treatments.",
+            "Tip: Enrolling in NHIF not only gives you medical coverage but also protects your family.",
+            "Interesting Fact: NHIF supports over 9 million members with various health services across the country.",
+            "Reminder: Always carry your NHIF card when visiting a healthcare facility to enjoy benefits.",
+            "Health Check: Regular check-ups are essential! NHIF promotes preventive health services to keep you healthy."
+          ];
+
+          function showRandomTip() {
+            const randomIndex = Math.floor(Math.random() * tips.length);
+            const tipElement = document.getElementById('tip');
+            tipElement.textContent = tips[randomIndex];
+          }
+
+          showRandomTip();
+        </script>
+
       </div>
 
       <div class="w-full p-4 mt-6">
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Common Health Issues in Kenyan Provinces</h2>
-        <canvas id="healthIssuesChart" class="w-full h-64 md:h-64"></canvas> <!-- Ensure height adapts on mobile -->
+        <canvas id="healthIssuesChart" class="w-full h-64 md:h-64"></canvas>
       </div>
 
       <script>
@@ -171,7 +169,7 @@
           },
           options: {
             responsive: true,
-            maintainAspectRatio: true, // Ensure aspect ratio is maintained
+            maintainAspectRatio: true,
             scales: {
               y: {
                 beginAtZero: true,
@@ -199,7 +197,6 @@
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Common Health Issues</h2>
         
         <div class="flex flex-col md:flex-row gap-4">
-          <!-- Card: Cancer -->
           <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/4 flex flex-col h-full">
             <h3 class="text-xl font-bold text-purple-600">Cancer</h3>
             <p class="text-gray-600">A disease caused by uncontrolled division of abnormal cells.</p>
@@ -210,7 +207,6 @@
             </ul>
           </div>
 
-          <!-- Card: HIV -->
           <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/4 flex flex-col h-full">
             <h3 class="text-xl font-bold text-purple-500">HIV/AIDS</h3>
             <p class="text-gray-600">A virus that attacks the immune system.</p>
@@ -221,7 +217,6 @@
             </ul>
           </div>
 
-          <!-- Card: Diabetes -->
           <div class="bg-white shadow-lg rounded-lg p-6 w-full md:w-1/3 lg:w-1/4 flex flex-col h-full">
             <h3 class="text-xl font-bold text-purple-500">Diabetes</h3>
             <p class="text-gray-600">A chronic condition affecting blood sugar regulation.</p>
@@ -256,19 +251,16 @@
   </div>
 
   <script>
-    // Toggle menu visibility
     document.getElementById('menu-button').addEventListener('click', function() {
       const menu = document.getElementById('symptom-menu');
       menu.classList.toggle('hidden');
     });
 
-    // Mobile menu toggle
     document.getElementById('mobile-menu-button').addEventListener('click', function() {
       const menu = document.getElementById('mobile-menu');
       menu.classList.toggle('hidden');
     });
 
-    // Handle symptom menu item click
     const symptomItems = document.querySelectorAll('.symptom-item');
     symptomItems.forEach(item => {
       item.addEventListener('click', function() {
@@ -279,45 +271,265 @@
       });
     });
 
-    // Diagnosis data with possible solutions
+    // Diagnosis data with solutions, signs, and explanations
     const diagnosisData = {
-      fever: ["Malaria", "Flu", "COVID-19"],
-      headache: ["Migraine", "Tension Headache", "Sinusitis"],
-      nausea: ["Food Poisoning", "Motion Sickness", "Gastritis"],
-      cough: ["Common Cold", "Bronchitis", "Pneumonia"],
-      fatigue: ["Anemia", "Hypothyroidism", "Chronic Fatigue Syndrome"],
-      "sore throat": ["Tonsillitis", "Pharyngitis", "Strep Throat"],
-      vomiting: ["Gastroenteritis", "Pregnancy", "Appendicitis"],
-      diarrhea: ["Cholera", "Irritable Bowel Syndrome", "Food Poisoning"],
-      "chest pain": ["Heart Attack", "Angina", "GERD"],
-      "shortness of breath": ["Asthma", "COPD", "Pulmonary Embolism"],
-      rash: ["Allergic Reaction", "Eczema", "Chickenpox"],
-      dizziness: ["Low Blood Pressure", "Vertigo", "Dehydration"],
-      "itchy eyes": ["Allergic Conjunctivitis", "Dry Eyes", "Pink Eye"],
-      "joint pain": ["Arthritis", "Gout", "Lupus"],
-      "stomach ache": ["Ulcer", "Gastritis", "Appendicitis"],
-      "back pain": ["Herniated Disc", "Muscle Strain", "Arthritis"],
-      chills: ["Malaria", "Flu", "COVID-19"],
-      "night sweats": ["Tuberculosis", "Hyperthyroidism", "Lymphoma"],
-      "swollen lymph nodes": ["Infection", "Mononucleosis", "Cancer"],
-      "loss of appetite": ["Depression", "Gastrointestinal Disorder", "Hepatitis"],
-      "blurred vision": ["Diabetes", "Glaucoma", "Cataracts"],
-    };
+      fever: {
+        possibleDiagnoses: ["Malaria", "Flu", "COVID-19"],
+        signs: {
+          Malaria: "High fever with chills and sweating, often cyclical.",
+          Flu: "Sudden onset of fever, body aches, and fatigue.",
+          "COVID-19": "Fever with cough, shortness of breath, and loss of taste or smell."
+        },
+        solutions: {
+          Malaria: "Seek immediate medical attention for diagnostic testing and treatment with antimalarial medications.",
+          Flu: "Rest and stay hydrated; antiviral medications may be prescribed to reduce severity.",
+          "COVID-19": "Follow isolation guidelines and obtain testing; seek medical advice if symptoms worsen."
+        }
+      },
 
-    const diagnosisSolutions = {
-      "Malaria": "Consult a healthcare professional immediately for treatment. Antimalarial medications are typically prescribed.",
-      "Flu": "Rest, stay hydrated, and consider antiviral medications if symptoms are severe.",
-      "COVID-19": "Isolate yourself and consult a medical professional for testing and advice.",
-      "Migraine": "Rest in a dark room, cold compress, and over-the-counter pain relief can help.",
-      "Tension Headache": "Practicing relaxation techniques and over-the-counter pain relievers can be beneficial.",
-      // Add solutions for the other diagnoses similarly...
+
+      // Other symptoms and their data...
+      headache: {
+    possibleDiagnoses: ["Migraine", "Tension Headache", "Sinusitis"],
+    signs: {
+      Migraine: "Intense, throbbing pain, often on one side; may include nausea and aura.",
+      "Tension Headache": "Dull, aching sensation all over the head; no nausea.",
+      Sinusitis: "Pain and pressure in the sinuses, often accompanied by nasal discharge."
+    },
+    solutions: {
+      Migraine: "Use prescribed triptans or pain relief medications and identify triggers to avoid future episodes.",
+      "Tension Headache": "Practice relaxation techniques and consider physical therapy to manage muscle tension.",
+      Sinusitis: "Use nasal saline rinses and decongestants for relief; antibiotics may be prescribed if bacterial."
+    }
+  },
+      
+  nausea: {
+    possibleDiagnoses: ["Food Poisoning", "Motion Sickness", "Gastritis"],
+    signs: {
+      "Food Poisoning": "Rapid onset of nausea accompanied by diarrhea and vomiting.",
+      "Motion Sickness": "Nausea triggered by movement; dizziness may also occur.",
+      Gastritis: "Nausea with stomach discomfort or burning sensation after eating."
+    },
+    solutions: {
+      "Food Poisoning": "Rest and stay hydrated; consider anti-nausea medications if symptoms persist.",
+      "Motion Sickness": "Use over-the-counter motion sickness medication prior to travel and avoid heavy meals.",
+      Gastritis: "Avoid irritant foods and consider proton pump inhibitors for stomach acid control."
+    }
+  },
+  cough: {
+    possibleDiagnoses: ["Common Cold", "Bronchitis", "Pneumonia"],
+    signs: {
+      "Common Cold": "Mild cough with clear mucus and other upper respiratory symptoms.",
+      Bronchitis: "Persistent cough with thick mucus; may include wheezing.",
+      Pneumonia: "Cough with green or rusty sputum; fever and difficulty breathing may be present."
+    },
+    solutions: {
+      "Common Cold": "Rest, hydrate, and use over-the-counter medications for symptom relief.",
+      Bronchitis: "Consider cough suppressants and bronchodilators for persistent symptoms.",
+      Pneumonia: "Seek urgent medical care and follow your doctor's prescribed antibiotic regimen."
+    }
+  },
+  fatigue: {
+    possibleDiagnoses: ["Anemia", "Hypothyroidism", "Chronic Fatigue Syndrome"],
+    signs: {
+      Anemia: "Fatigue with pale skin and weakness; shortness of breath during exertion.",
+      Hypothyroidism: "Fatigue with weight gain, cold intolerance, and dry skin.",
+      "Chronic Fatigue Syndrome": "Severe fatigue lasting more than six months; post-exertional malaise."
+    },
+    solutions: {
+      Anemia: "Increase dietary iron through food or supplements and follow up with blood tests for monitoring.",
+      Hypothyroidism: "Begin thyroid hormone replacement therapy and regularly monitor hormone levels.",
+      "Chronic Fatigue Syndrome": "Engage in a structured treatment plan that includes behavioral therapy and graded exercise."
+    }
+  },
+  "sore throat": {
+    possibleDiagnoses: ["Tonsillitis", "Pharyngitis", "Strep Throat"],
+    signs: {
+      Tonsillitis: "Swollen tonsils with white patches; may include difficulty swallowing.",
+      Pharyngitis: "Red and swollen throat, often with cough and hoarseness.",
+      "Strep Throat": "Sudden onset of severe throat pain, fever, and swollen lymph nodes."
+    },
+    solutions: {
+      Tonsillitis: "Antibiotic therapy if bacterial; consider tonsillectomy for recurrent cases.",
+      Pharyngitis: "Gargle salt water and use throat sprays for symptomatic relief.",
+      "Strep Throat": "Follow a prescribed course of antibiotics to eliminate the infection and reduce complications."
+    }
+  },
+  vomiting: {
+    possibleDiagnoses: ["Gastroenteritis", "Pregnancy", "Appendicitis"],
+    signs: {
+      Gastroenteritis: "Nausea and vomiting with diarrhea; often caused by infection.",
+      Pregnancy: "Nausea, often in the morning; may include cravings and aversions.",
+      Appendicitis: "Nausea with referred pain in the lower right abdomen."
+    },
+    solutions: {
+      Gastroenteritis: "Stay hydrated with oral rehydration solutions; consult a healthcare provider if severe.",
+      Pregnancy: "Consider dietary adjustments and vitamin B6 supplementation to alleviate nausea.",
+      Appendicitis: "Seek immediate medical attention for potential surgical intervention."
+    }
+  },
+  diarrhea: {
+    possibleDiagnoses: ["Cholera", "Irritable Bowel Syndrome", "Food Poisoning"],
+    signs: {
+      Cholera: "Severe, watery diarrhea and dehydration, often after consuming contaminated water.",
+      "Irritable Bowel Syndrome": "Cramping, change in bowel habits; may alternate between diarrhea and constipation.",
+      "Food Poisoning": "Diarrhea with nausea and vomiting, usually after eating contaminated food."
+    },
+    solutions: {
+      Cholera: "Seek immediate medical attention and receive intravenous fluids for severe dehydration.",
+      "Irritable Bowel Syndrome": "Implement dietary changes, mindfulness practices, and consider medications tailored to symptoms.",
+      "Food Poisoning": "Monitor symptoms and rest; medical evaluation may be needed for severe cases."
+    }
+  },
+  "chest pain": {
+    possibleDiagnoses: ["Heart Attack", "Angina", "GERD"],
+    signs: {
+      "Heart Attack": "Crushing chest pain with radiating pain to the arm or jaw; sweating and nausea may occur.",
+      Angina: "Chest pain or discomfort during physical activity; tends to resolve with rest.",
+      GERD: "Burning sensation in the chest, often after meals; may include regurgitation."
+    },
+    solutions: {
+      "Heart Attack": "Call emergency services immediately; aspirin may help while waiting for assistance.",
+      Angina: "Use prescribed nitroglycerin for immediate relief and consult a cardiologist for further management.",
+      GERD: "Implement dietary changes and take proton pump inhibitors as advised by a healthcare provider."
+    }
+  },
+  "shortness of breath": {
+    possibleDiagnoses: ["Asthma", "COPD", "Pulmonary Embolism"],
+    signs: {
+      Asthma: "Wheezing and coughing, particularly at night or during exercise.",
+      COPD: "Progressive breathlessness; chronic cough with sputum production.",
+      "Pulmonary Embolism": "Sudden shortness of breath with chest pain; may cough up blood."
+    },
+    solutions: {
+      Asthma: "Use a rescue inhaler and have a written asthma action plan tailored to personal triggers.",
+      COPD: "Engage in pulmonary rehabilitation and use bronchodilators as prescribed.",
+      "Pulmonary Embolism": "Seek emergency care for antithrombotic treatment and possibly hospitalization."
+    }
+  },
+  rash: {
+    possibleDiagnoses: ["Allergic Reaction", "Eczema", "Chickenpox"],
+    signs: {
+      "Allergic Reaction": "Sudden onset of hives or welts; may include swelling of the face or lips.",
+      Eczema: "Chronic itchy rash, often in the creases of the elbows and knees.",
+      "Chickenpox": "Itchy, blister-like rash that progresses to scabs."
+    },
+    solutions: {
+      "Allergic Reaction": "Take antihistamines to reduce symptoms; seek emergency help for severe reactions.",
+      Eczema: "Use topical corticosteroids and moisturizers; identify and avoid triggers.",
+      "Chickenpox": "Consult a healthcare provider for antiviral treatments and focus on symptom relief."
+    }
+  },
+  "joint pain": {
+    possibleDiagnoses: ["Arthritis", "Gout", "Lupus"],
+    signs: {
+      Arthritis: "Joint stiffness and swelling, particularly after inactivity.",
+      Gout: "Intense pain in one joint, often the big toe; redness and swelling.",
+      Lupus: "Joint pain with a characteristic butterfly rash on the face and fatigue."
+    },
+    solutions: {
+      Arthritis: "Implement a structured exercise program and consider disease-modifying antirheumatic drugs (DMARDs).",
+      Gout: "Follow a low-purine diet and take medications to manage uric acid levels.",
+      Lupus: "Follow a tailored treatment plan from a rheumatologist, including immunosuppressive therapy."
+    }
+  },
+  "stomach ache": {
+    possibleDiagnoses: ["Ulcer", "Gastritis", "Appendicitis"],
+    signs: {
+      Ulcer: "Burning stomach pain that improves with eating; may include bloating.",
+      Gastritis: "Nausea and discomfort in the upper abdomen; may worsen with spicy foods.",
+      Appendicitis: "Intense pain in the lower right abdomen; may include fever and vomiting."
+    },
+    solutions: {
+      Ulcer: "Consult a healthcare provider for proton pump inhibitors and antibiotics if needed.",
+      Gastritis: "Avoid irritant foods; use antacids or medications for acid reduction as needed.",
+      Appendicitis: "Seek emergency treatment for assessment and possible surgical intervention."
+    }
+  },
+  "back pain": {
+    possibleDiagnoses: ["Herniated Disc", "Muscle Strain", "Arthritis"],
+    signs: {
+      "Herniated Disc": "Pain radiating down the leg; may cause numbness or tingling.",
+      "Muscle Strain": "Pain localized to the back; often linked to an activity or movement.",
+      Arthritis: "Chronic pain with stiffness; may worsen with inactivity."
+    },
+    solutions: {
+      "Herniated Disc": "Follow a physical therapy regimen; surgical interventions may be considered if conservative measures fail.",
+      "Muscle Strain": "Apply ice and rest; over-the-counter pain relief can help reduce discomfort.",
+      Arthritis: "Adapt lifestyle changes and engage in a maintenance physiotherapy program tailored to your needs."
+    }
+  },
+  "chills": {
+    possibleDiagnoses: ["Malaria", "Flu", "COVID-19"],
+    signs: {
+      Malaria: "Chills accompanied by sweating and high fever; may occur in cycles.",
+      Flu: "Chills with body aches and fatigue; sudden onset.",
+      "COVID-19": "Chills with fever, cough, and possible loss of taste or smell."
+    },
+    solutions: {
+      Malaria: "Immediate medical attention required for diagnostic tests and treatment.",
+      Flu: "Over-the-counter analgesics to reduce fever and body aches; rest and hydration are essential.",
+      "COVID-19": "Self-isolate and follow health protocols; consult healthcare providers as needed."
+    }
+  },
+  "night sweats": {
+    possibleDiagnoses: ["Tuberculosis", "Hyperthyroidism", "Lymphoma"],
+    signs: {
+      Tuberculosis: "Night sweats accompanied by cough, weight loss, and fatigue.",
+      Hyperthyroidism: "Night sweats with rapid heartbeat and heat intolerance.",
+      Lymphoma: "Night sweats with unexplained fever and swollen lymph nodes."
+    },
+    solutions: {
+      Tuberculosis: "Immediate medical evaluation, followed by a course of antibiotics.",
+      Hyperthyroidism: "Medication to manage thyroid hormone levels and regular monitoring.",
+      Lymphoma: "Seek specialized treatment from an oncologist, which may include chemotherapy or radiotherapy."
+    }
+  },
+  "swollen lymph nodes": {
+    possibleDiagnoses: ["Infection", "Mononucleosis", "Cancer"],
+    signs: {
+      Infection: "Local pain and tenderness; may accompany other infection signs.",
+      Mononucleosis: "Fatigue, sore throat, and fever paralleling swollen lymph nodes.",
+      Cancer: "Persistent swollen lymph nodes; may be accompanied by unexplained weight loss."
+    },
+    solutions: {
+      Infection: "Follow up with a healthcare provider to determine the underlying cause and appropriate treatment.",
+      Mononucleosis: "Rest, stay hydrated, and avoid physical activities that may risk spleen rupture.",
+      Cancer: "Seek immediate evaluation and establish a treatment plan based on specific diagnosis and stage."
+    }
+  },
+  "loss of appetite": {
+    possibleDiagnoses: ["Depression", "Gastrointestinal Disorder", "Hepatitis"],
+    signs: {
+      Depression: "Persistent sadness and loss of interest in activities; emotional changes.",
+      "Gastrointestinal Disorder": "Nausea or discomfort after eating; may involve abdominal pain.",
+      Hepatitis: "Loss of appetite with jaundice and abdominal discomfort."
+    },
+    solutions: {
+      Depression: "Engage in counseling and consider medication as advised by a mental health professional.",
+      "Gastrointestinal Disorder": "Consult a healthcare provider for diagnostic testing and personalized treatment.",
+      Hepatitis: "Regular monitoring and treatment plan tailored to the type of hepatitis diagnosed."
+    }
+  },
+  "blurred vision": {
+    possibleDiagnoses: ["Diabetes", "Glaucoma", "Cataracts"],
+    signs: {
+      Diabetes: "Blurred vision fluctuating with blood sugar levels; may include diabetic retinopathy.",
+      Glaucoma: "Gradual loss of peripheral vision; may have eye pain and headaches.",
+      Cataracts: "Cloudy vision with difficulty seeing at night and glare sensitivity."
+    },
+    solutions: {
+      Diabetes: "Strict control of blood sugar levels and routine ophthalmologic exams are crucial.",
+      Glaucoma: "Regular use of prescribed eye drops and monitoring to prevent vision loss.",
+      Cataracts: "Consult an ophthalmologist for evaluation and potential surgical intervention."
+    }
+  },
     };
 
     const diagnoseButton = document.getElementById('diagnose-button');
     const resultsSection = document.getElementById('results');
     const diagnosisList = document.getElementById('diagnosis-list');
 
-    // Event listener for diagnosis button
     diagnoseButton.addEventListener('click', () => {
       const symptomsInput = document.getElementById('symptoms').value.toLowerCase();
       const symptoms = symptomsInput.split(',').map(s => s.trim());
@@ -325,7 +537,7 @@
 
       symptoms.forEach(symptom => {
         if (diagnosisData[symptom]) {
-          diagnosisData[symptom].forEach(condition => possibleDiagnoses.add(condition));
+          diagnosisData[symptom].possibleDiagnoses.forEach(condition => possibleDiagnoses.add(condition));
         }
       });
 
@@ -335,25 +547,28 @@
         possibleDiagnoses.forEach(condition => {
           const li = document.createElement('li');
           li.textContent = condition;
-          li.classList.add('diagnosis-item', 'cursor-pointer', 'hover:underline'); // Make it clickable
+          li.classList.add('diagnosis-item', 'cursor-pointer', 'hover:underline');
           diagnosisList.appendChild(li);
 
-          // Add click event for each diagnosis to show solution
+          // Add click event for each diagnosis to show details
           li.addEventListener('click', () => {
-            displaySolution(condition);
+            displayDetails(condition, symptoms);
           });
         });
       } else {
         resultsSection.classList.remove('hidden');
-        diagnosisList.innerHTML = '<li>No matches found. Please refine your symptoms.</li>';
+        diagnosisList.innerHTML = '<li>No diagnoses found for the symptoms provided.</li>';
       }
     });
 
-    function displaySolution(condition) {
-      const solutionText = diagnosisSolutions[condition] || "No solution available for this diagnosis.";
-      alert(`Solution for ${condition}: ${solutionText}`); // Show solution in an alert
-    }
-    
+    function displayDetails(condition, symptoms) {
+      const diagnosisInfo = diagnosisData[symptoms[0]];
+      const signs = diagnosisInfo.signs[condition];
+      const solutionText = diagnosisInfo.solutions[condition] || "Consult a healthcare professional for further assistance.";
+      
+      const detailsText = `Diagnosis: ${condition}\n\nSigns: ${signs}\n\nSolution: ${solutionText}`;
+      alert(detailsText); 
+    } 
   </script>
 </body>
 </html>
