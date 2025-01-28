@@ -92,7 +92,6 @@
                 <li><a href="#" class="block hover:underline symptom-item" data-symptom="blurred vision">Blurred Vision</a></li>
               </ul>
             </div>
-            
           </div>
         </div>
 
@@ -115,7 +114,7 @@
             <p class="mt-4">To learn more about how to enroll and utilize your NHIF benefits, visit your nearest NHIF office or check their website.</p>
             <div id="tip" class="mt-4 text-lg font-bold"></div>
           </div>
-          
+
           <script>
             const tips = [
               "Did you know? NHIF covers a wide range of outpatient services, including consultations and treatments.",
@@ -280,29 +279,38 @@
       });
     });
 
-    // Diagnosis data
+    // Diagnosis data with possible solutions
     const diagnosisData = {
       fever: ["Malaria", "Flu", "COVID-19"],
-    headache: ["Migraine", "Tension Headache", "Sinusitis"],
-    nausea: ["Food Poisoning", "Motion Sickness", "Gastritis"],
-    cough: ["Common Cold", "Bronchitis", "Pneumonia"],
-    fatigue: ["Anemia", "Hypothyroidism", "Chronic Fatigue Syndrome"],
-    "sore throat": ["Tonsillitis", "Pharyngitis", "Strep Throat"],
-    vomiting: ["Gastroenteritis", "Pregnancy", "Appendicitis"],
-    diarrhea: ["Cholera", "Irritable Bowel Syndrome", "Food Poisoning"],
-    "chest pain": ["Heart Attack", "Angina", "GERD"],
-    "shortness of breath": ["Asthma", "COPD", "Pulmonary Embolism"],
-    rash: ["Allergic Reaction", "Eczema", "Chickenpox"],
-    dizziness: ["Low Blood Pressure", "Vertigo", "Dehydration"],
-    "itchy eyes": ["Allergic Conjunctivitis", "Dry Eyes", "Pink Eye"],
-    "joint pain": ["Arthritis", "Gout", "Lupus"],
-    "stomach ache": ["Ulcer", "Gastritis", "Appendicitis"],
-    "back pain": ["Herniated Disc", "Muscle Strain", "Arthritis"],
-    chills: ["Malaria", "Flu", "COVID-19"],
-    "night sweats": ["Tuberculosis", "Hyperthyroidism", "Lymphoma"],
-    "swollen lymph nodes": ["Infection", "Mononucleosis", "Cancer"],
-    "loss of appetite": ["Depression", "Gastrointestinal Disorder", "Hepatitis"],
-    "blurred vision": ["Diabetes", "Glaucoma", "Cataracts"],
+      headache: ["Migraine", "Tension Headache", "Sinusitis"],
+      nausea: ["Food Poisoning", "Motion Sickness", "Gastritis"],
+      cough: ["Common Cold", "Bronchitis", "Pneumonia"],
+      fatigue: ["Anemia", "Hypothyroidism", "Chronic Fatigue Syndrome"],
+      "sore throat": ["Tonsillitis", "Pharyngitis", "Strep Throat"],
+      vomiting: ["Gastroenteritis", "Pregnancy", "Appendicitis"],
+      diarrhea: ["Cholera", "Irritable Bowel Syndrome", "Food Poisoning"],
+      "chest pain": ["Heart Attack", "Angina", "GERD"],
+      "shortness of breath": ["Asthma", "COPD", "Pulmonary Embolism"],
+      rash: ["Allergic Reaction", "Eczema", "Chickenpox"],
+      dizziness: ["Low Blood Pressure", "Vertigo", "Dehydration"],
+      "itchy eyes": ["Allergic Conjunctivitis", "Dry Eyes", "Pink Eye"],
+      "joint pain": ["Arthritis", "Gout", "Lupus"],
+      "stomach ache": ["Ulcer", "Gastritis", "Appendicitis"],
+      "back pain": ["Herniated Disc", "Muscle Strain", "Arthritis"],
+      chills: ["Malaria", "Flu", "COVID-19"],
+      "night sweats": ["Tuberculosis", "Hyperthyroidism", "Lymphoma"],
+      "swollen lymph nodes": ["Infection", "Mononucleosis", "Cancer"],
+      "loss of appetite": ["Depression", "Gastrointestinal Disorder", "Hepatitis"],
+      "blurred vision": ["Diabetes", "Glaucoma", "Cataracts"],
+    };
+
+    const diagnosisSolutions = {
+      "Malaria": "Consult a healthcare professional immediately for treatment. Antimalarial medications are typically prescribed.",
+      "Flu": "Rest, stay hydrated, and consider antiviral medications if symptoms are severe.",
+      "COVID-19": "Isolate yourself and consult a medical professional for testing and advice.",
+      "Migraine": "Rest in a dark room, cold compress, and over-the-counter pain relief can help.",
+      "Tension Headache": "Practicing relaxation techniques and over-the-counter pain relievers can be beneficial.",
+      // Add solutions for the other diagnoses similarly...
     };
 
     const diagnoseButton = document.getElementById('diagnose-button');
@@ -327,13 +335,25 @@
         possibleDiagnoses.forEach(condition => {
           const li = document.createElement('li');
           li.textContent = condition;
+          li.classList.add('diagnosis-item', 'cursor-pointer', 'hover:underline'); // Make it clickable
           diagnosisList.appendChild(li);
+
+          // Add click event for each diagnosis to show solution
+          li.addEventListener('click', () => {
+            displaySolution(condition);
+          });
         });
       } else {
         resultsSection.classList.remove('hidden');
         diagnosisList.innerHTML = '<li>No matches found. Please refine your symptoms.</li>';
       }
     });
+
+    function displaySolution(condition) {
+      const solutionText = diagnosisSolutions[condition] || "No solution available for this diagnosis.";
+      alert(`Solution for ${condition}: ${solutionText}`); // Show solution in an alert
+    }
+    
   </script>
 </body>
 </html>
