@@ -6,6 +6,45 @@
   <title>St. Gabriel Mission Hospital</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .modal-header {
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+    .modal-footer {
+      text-align: right;
+      margin-top: 10px;
+    }
+    .close {
+      cursor: pointer;
+      color: #3182ce;
+      transition: color 0.2s;
+    }
+    .close:hover {
+      color: #2b6cb0;
+    }
+  </style>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
   <div class="min-h-screen flex flex-col">
@@ -30,7 +69,7 @@
     </nav>
 
     <header class="bg-white text-black text-center py-6">
-      <h1 class="text-3xl font-bold">Welcome to St. Gabriel Mission Hospital</h1>
+      <h1 class="text-3xl font-bold">Welcome to St. Gabriel Mission Hospital Decision Support system</h1>
       <p class="text-lg">Your trusted companion for quick and accurate medical guidance.</p>
     </header>
 
@@ -145,7 +184,7 @@
         const healthIssuesChart = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['Nairobi', 'Central', 'Coast', 'Eastern', 'North Eastern','Nyanza','Rift Valley','Western'],
+            labels: ['Nairobi', 'Central', 'Coast', 'Eastern', 'North Eastern', 'Nyanza', 'Rift Valley', 'Western'],
             datasets: [
               {
                 label: 'HIV',
@@ -250,6 +289,17 @@
     </footer>
   </div>
 
+  <!-- Modal Structure -->
+  <div id="diagnosis-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">Diagnosis Details</div>
+      <div id="modal-body" class="mb-4"></div>
+      <div class="modal-footer">
+        <span class="close" onclick="closeModal()">Close</span>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.getElementById('menu-button').addEventListener('click', function() {
       const menu = document.getElementById('symptom-menu');
@@ -286,244 +336,240 @@
           "COVID-19": "Follow isolation guidelines and obtain testing; seek medical advice if symptoms worsen."
         }
       },
-
-
-      // Other symptoms and their data...
       headache: {
-    possibleDiagnoses: ["Migraine", "Tension Headache", "Sinusitis"],
-    signs: {
-      Migraine: "Intense, throbbing pain, often on one side; may include nausea and aura.",
-      "Tension Headache": "Dull, aching sensation all over the head; no nausea.",
-      Sinusitis: "Pain and pressure in the sinuses, often accompanied by nasal discharge."
-    },
-    solutions: {
-      Migraine: "Use prescribed triptans or pain relief medications and identify triggers to avoid future episodes.",
-      "Tension Headache": "Practice relaxation techniques and consider physical therapy to manage muscle tension.",
-      Sinusitis: "Use nasal saline rinses and decongestants for relief; antibiotics may be prescribed if bacterial."
-    }
-  },
-      
-  nausea: {
-    possibleDiagnoses: ["Food Poisoning", "Motion Sickness", "Gastritis"],
-    signs: {
-      "Food Poisoning": "Rapid onset of nausea accompanied by diarrhea and vomiting.",
-      "Motion Sickness": "Nausea triggered by movement; dizziness may also occur.",
-      Gastritis: "Nausea with stomach discomfort or burning sensation after eating."
-    },
-    solutions: {
-      "Food Poisoning": "Rest and stay hydrated; consider anti-nausea medications if symptoms persist.",
-      "Motion Sickness": "Use over-the-counter motion sickness medication prior to travel and avoid heavy meals.",
-      Gastritis: "Avoid irritant foods and consider proton pump inhibitors for stomach acid control."
-    }
-  },
-  cough: {
-    possibleDiagnoses: ["Common Cold", "Bronchitis", "Pneumonia"],
-    signs: {
-      "Common Cold": "Mild cough with clear mucus and other upper respiratory symptoms.",
-      Bronchitis: "Persistent cough with thick mucus; may include wheezing.",
-      Pneumonia: "Cough with green or rusty sputum; fever and difficulty breathing may be present."
-    },
-    solutions: {
-      "Common Cold": "Rest, hydrate, and use over-the-counter medications for symptom relief.",
-      Bronchitis: "Consider cough suppressants and bronchodilators for persistent symptoms.",
-      Pneumonia: "Seek urgent medical care and follow your doctor's prescribed antibiotic regimen."
-    }
-  },
-  fatigue: {
-    possibleDiagnoses: ["Anemia", "Hypothyroidism", "Chronic Fatigue Syndrome"],
-    signs: {
-      Anemia: "Fatigue with pale skin and weakness; shortness of breath during exertion.",
-      Hypothyroidism: "Fatigue with weight gain, cold intolerance, and dry skin.",
-      "Chronic Fatigue Syndrome": "Severe fatigue lasting more than six months; post-exertional malaise."
-    },
-    solutions: {
-      Anemia: "Increase dietary iron through food or supplements and follow up with blood tests for monitoring.",
-      Hypothyroidism: "Begin thyroid hormone replacement therapy and regularly monitor hormone levels.",
-      "Chronic Fatigue Syndrome": "Engage in a structured treatment plan that includes behavioral therapy and graded exercise."
-    }
-  },
-  "sore throat": {
-    possibleDiagnoses: ["Tonsillitis", "Pharyngitis", "Strep Throat"],
-    signs: {
-      Tonsillitis: "Swollen tonsils with white patches; may include difficulty swallowing.",
-      Pharyngitis: "Red and swollen throat, often with cough and hoarseness.",
-      "Strep Throat": "Sudden onset of severe throat pain, fever, and swollen lymph nodes."
-    },
-    solutions: {
-      Tonsillitis: "Antibiotic therapy if bacterial; consider tonsillectomy for recurrent cases.",
-      Pharyngitis: "Gargle salt water and use throat sprays for symptomatic relief.",
-      "Strep Throat": "Follow a prescribed course of antibiotics to eliminate the infection and reduce complications."
-    }
-  },
-  vomiting: {
-    possibleDiagnoses: ["Gastroenteritis", "Pregnancy", "Appendicitis"],
-    signs: {
-      Gastroenteritis: "Nausea and vomiting with diarrhea; often caused by infection.",
-      Pregnancy: "Nausea, often in the morning; may include cravings and aversions.",
-      Appendicitis: "Nausea with referred pain in the lower right abdomen."
-    },
-    solutions: {
-      Gastroenteritis: "Stay hydrated with oral rehydration solutions; consult a healthcare provider if severe.",
-      Pregnancy: "Consider dietary adjustments and vitamin B6 supplementation to alleviate nausea.",
-      Appendicitis: "Seek immediate medical attention for potential surgical intervention."
-    }
-  },
-  diarrhea: {
-    possibleDiagnoses: ["Cholera", "Irritable Bowel Syndrome", "Food Poisoning"],
-    signs: {
-      Cholera: "Severe, watery diarrhea and dehydration, often after consuming contaminated water.",
-      "Irritable Bowel Syndrome": "Cramping, change in bowel habits; may alternate between diarrhea and constipation.",
-      "Food Poisoning": "Diarrhea with nausea and vomiting, usually after eating contaminated food."
-    },
-    solutions: {
-      Cholera: "Seek immediate medical attention and receive intravenous fluids for severe dehydration.",
-      "Irritable Bowel Syndrome": "Implement dietary changes, mindfulness practices, and consider medications tailored to symptoms.",
-      "Food Poisoning": "Monitor symptoms and rest; medical evaluation may be needed for severe cases."
-    }
-  },
-  "chest pain": {
-    possibleDiagnoses: ["Heart Attack", "Angina", "GERD"],
-    signs: {
-      "Heart Attack": "Crushing chest pain with radiating pain to the arm or jaw; sweating and nausea may occur.",
-      Angina: "Chest pain or discomfort during physical activity; tends to resolve with rest.",
-      GERD: "Burning sensation in the chest, often after meals; may include regurgitation."
-    },
-    solutions: {
-      "Heart Attack": "Call emergency services immediately; aspirin may help while waiting for assistance.",
-      Angina: "Use prescribed nitroglycerin for immediate relief and consult a cardiologist for further management.",
-      GERD: "Implement dietary changes and take proton pump inhibitors as advised by a healthcare provider."
-    }
-  },
-  "shortness of breath": {
-    possibleDiagnoses: ["Asthma", "COPD", "Pulmonary Embolism"],
-    signs: {
-      Asthma: "Wheezing and coughing, particularly at night or during exercise.",
-      COPD: "Progressive breathlessness; chronic cough with sputum production.",
-      "Pulmonary Embolism": "Sudden shortness of breath with chest pain; may cough up blood."
-    },
-    solutions: {
-      Asthma: "Use a rescue inhaler and have a written asthma action plan tailored to personal triggers.",
-      COPD: "Engage in pulmonary rehabilitation and use bronchodilators as prescribed.",
-      "Pulmonary Embolism": "Seek emergency care for antithrombotic treatment and possibly hospitalization."
-    }
-  },
-  rash: {
-    possibleDiagnoses: ["Allergic Reaction", "Eczema", "Chickenpox"],
-    signs: {
-      "Allergic Reaction": "Sudden onset of hives or welts; may include swelling of the face or lips.",
-      Eczema: "Chronic itchy rash, often in the creases of the elbows and knees.",
-      "Chickenpox": "Itchy, blister-like rash that progresses to scabs."
-    },
-    solutions: {
-      "Allergic Reaction": "Take antihistamines to reduce symptoms; seek emergency help for severe reactions.",
-      Eczema: "Use topical corticosteroids and moisturizers; identify and avoid triggers.",
-      "Chickenpox": "Consult a healthcare provider for antiviral treatments and focus on symptom relief."
-    }
-  },
-  "joint pain": {
-    possibleDiagnoses: ["Arthritis", "Gout", "Lupus"],
-    signs: {
-      Arthritis: "Joint stiffness and swelling, particularly after inactivity.",
-      Gout: "Intense pain in one joint, often the big toe; redness and swelling.",
-      Lupus: "Joint pain with a characteristic butterfly rash on the face and fatigue."
-    },
-    solutions: {
-      Arthritis: "Implement a structured exercise program and consider disease-modifying antirheumatic drugs (DMARDs).",
-      Gout: "Follow a low-purine diet and take medications to manage uric acid levels.",
-      Lupus: "Follow a tailored treatment plan from a rheumatologist, including immunosuppressive therapy."
-    }
-  },
-  "stomach ache": {
-    possibleDiagnoses: ["Ulcer", "Gastritis", "Appendicitis"],
-    signs: {
-      Ulcer: "Burning stomach pain that improves with eating; may include bloating.",
-      Gastritis: "Nausea and discomfort in the upper abdomen; may worsen with spicy foods.",
-      Appendicitis: "Intense pain in the lower right abdomen; may include fever and vomiting."
-    },
-    solutions: {
-      Ulcer: "Consult a healthcare provider for proton pump inhibitors and antibiotics if needed.",
-      Gastritis: "Avoid irritant foods; use antacids or medications for acid reduction as needed.",
-      Appendicitis: "Seek emergency treatment for assessment and possible surgical intervention."
-    }
-  },
-  "back pain": {
-    possibleDiagnoses: ["Herniated Disc", "Muscle Strain", "Arthritis"],
-    signs: {
-      "Herniated Disc": "Pain radiating down the leg; may cause numbness or tingling.",
-      "Muscle Strain": "Pain localized to the back; often linked to an activity or movement.",
-      Arthritis: "Chronic pain with stiffness; may worsen with inactivity."
-    },
-    solutions: {
-      "Herniated Disc": "Follow a physical therapy regimen; surgical interventions may be considered if conservative measures fail.",
-      "Muscle Strain": "Apply ice and rest; over-the-counter pain relief can help reduce discomfort.",
-      Arthritis: "Adapt lifestyle changes and engage in a maintenance physiotherapy program tailored to your needs."
-    }
-  },
-  "chills": {
-    possibleDiagnoses: ["Malaria", "Flu", "COVID-19"],
-    signs: {
-      Malaria: "Chills accompanied by sweating and high fever; may occur in cycles.",
-      Flu: "Chills with body aches and fatigue; sudden onset.",
-      "COVID-19": "Chills with fever, cough, and possible loss of taste or smell."
-    },
-    solutions: {
-      Malaria: "Immediate medical attention required for diagnostic tests and treatment.",
-      Flu: "Over-the-counter analgesics to reduce fever and body aches; rest and hydration are essential.",
-      "COVID-19": "Self-isolate and follow health protocols; consult healthcare providers as needed."
-    }
-  },
-  "night sweats": {
-    possibleDiagnoses: ["Tuberculosis", "Hyperthyroidism", "Lymphoma"],
-    signs: {
-      Tuberculosis: "Night sweats accompanied by cough, weight loss, and fatigue.",
-      Hyperthyroidism: "Night sweats with rapid heartbeat and heat intolerance.",
-      Lymphoma: "Night sweats with unexplained fever and swollen lymph nodes."
-    },
-    solutions: {
-      Tuberculosis: "Immediate medical evaluation, followed by a course of antibiotics.",
-      Hyperthyroidism: "Medication to manage thyroid hormone levels and regular monitoring.",
-      Lymphoma: "Seek specialized treatment from an oncologist, which may include chemotherapy or radiotherapy."
-    }
-  },
-  "swollen lymph nodes": {
-    possibleDiagnoses: ["Infection", "Mononucleosis", "Cancer"],
-    signs: {
-      Infection: "Local pain and tenderness; may accompany other infection signs.",
-      Mononucleosis: "Fatigue, sore throat, and fever paralleling swollen lymph nodes.",
-      Cancer: "Persistent swollen lymph nodes; may be accompanied by unexplained weight loss."
-    },
-    solutions: {
-      Infection: "Follow up with a healthcare provider to determine the underlying cause and appropriate treatment.",
-      Mononucleosis: "Rest, stay hydrated, and avoid physical activities that may risk spleen rupture.",
-      Cancer: "Seek immediate evaluation and establish a treatment plan based on specific diagnosis and stage."
-    }
-  },
-  "loss of appetite": {
-    possibleDiagnoses: ["Depression", "Gastrointestinal Disorder", "Hepatitis"],
-    signs: {
-      Depression: "Persistent sadness and loss of interest in activities; emotional changes.",
-      "Gastrointestinal Disorder": "Nausea or discomfort after eating; may involve abdominal pain.",
-      Hepatitis: "Loss of appetite with jaundice and abdominal discomfort."
-    },
-    solutions: {
-      Depression: "Engage in counseling and consider medication as advised by a mental health professional.",
-      "Gastrointestinal Disorder": "Consult a healthcare provider for diagnostic testing and personalized treatment.",
-      Hepatitis: "Regular monitoring and treatment plan tailored to the type of hepatitis diagnosed."
-    }
-  },
-  "blurred vision": {
-    possibleDiagnoses: ["Diabetes", "Glaucoma", "Cataracts"],
-    signs: {
-      Diabetes: "Blurred vision fluctuating with blood sugar levels; may include diabetic retinopathy.",
-      Glaucoma: "Gradual loss of peripheral vision; may have eye pain and headaches.",
-      Cataracts: "Cloudy vision with difficulty seeing at night and glare sensitivity."
-    },
-    solutions: {
-      Diabetes: "Strict control of blood sugar levels and routine ophthalmologic exams are crucial.",
-      Glaucoma: "Regular use of prescribed eye drops and monitoring to prevent vision loss.",
-      Cataracts: "Consult an ophthalmologist for evaluation and potential surgical intervention."
-    }
-  },
+        possibleDiagnoses: ["Migraine", "Tension Headache", "Sinusitis"],
+        signs: {
+          Migraine: "Intense, throbbing pain, often on one side; may include nausea and aura.",
+          "Tension Headache": "Dull, aching sensation all over the head; no nausea.",
+          Sinusitis: "Pain and pressure in the sinuses, often accompanied by nasal discharge."
+        },
+        solutions: {
+          Migraine: "Use prescribed triptans or pain relief medications and identify triggers to avoid future episodes.",
+          "Tension Headache": "Practice relaxation techniques and consider physical therapy to manage muscle tension.",
+          Sinusitis: "Use nasal saline rinses and decongestants for relief; antibiotics may be prescribed if bacterial."
+        }
+      },
+      nausea: {
+        possibleDiagnoses: ["Food Poisoning", "Motion Sickness", "Gastritis"],
+        signs: {
+          "Food Poisoning": "Rapid onset of nausea accompanied by diarrhea and vomiting.",
+          "Motion Sickness": "Nausea triggered by movement; dizziness may also occur.",
+          Gastritis: "Nausea with stomach discomfort or burning sensation after eating."
+        },
+        solutions: {
+          "Food Poisoning": "Rest and stay hydrated; consider anti-nausea medications if symptoms persist.",
+          "Motion Sickness": "Use over-the-counter motion sickness medication prior to travel and avoid heavy meals.",
+          Gastritis: "Avoid irritant foods and consider proton pump inhibitors for stomach acid control."
+        }
+      },
+      cough: {
+        possibleDiagnoses: ["Common Cold", "Bronchitis", "Pneumonia"],
+        signs: {
+          "Common Cold": "Mild cough with clear mucus and other upper respiratory symptoms.",
+          Bronchitis: "Persistent cough with thick mucus; may include wheezing.",
+          Pneumonia: "Cough with green or rusty sputum; fever and difficulty breathing may be present."
+        },
+        solutions: {
+          "Common Cold": "Rest, hydrate, and use over-the-counter medications for symptom relief.",
+          Bronchitis: "Consider cough suppressants and bronchodilators for persistent symptoms.",
+          Pneumonia: "Seek urgent medical care and follow your doctor's prescribed antibiotic regimen."
+        }
+      },
+      fatigue: {
+        possibleDiagnoses: ["Anemia", "Hypothyroidism", "Chronic Fatigue Syndrome"],
+        signs: {
+          Anemia: "Fatigue with pale skin and weakness; shortness of breath during exertion.",
+          Hypothyroidism: "Fatigue with weight gain, cold intolerance, and dry skin.",
+          "Chronic Fatigue Syndrome": "Severe fatigue lasting more than six months; post-exertional malaise."
+        },
+        solutions: {
+          Anemia: "Increase dietary iron through food or supplements and follow up with blood tests for monitoring.",
+          Hypothyroidism: "Begin thyroid hormone replacement therapy and regularly monitor hormone levels.",
+          "Chronic Fatigue Syndrome": "Engage in a structured treatment plan that includes behavioral therapy and graded exercise."
+        }
+      },
+      "sore throat": {
+        possibleDiagnoses: ["Tonsillitis", "Pharyngitis", "Strep Throat"],
+        signs: {
+          Tonsillitis: "Swollen tonsils with white patches; may include difficulty swallowing.",
+          Pharyngitis: "Red and swollen throat, often with cough and hoarseness.",
+          "Strep Throat": "Sudden onset of severe throat pain, fever, and swollen lymph nodes."
+        },
+        solutions: {
+          Tonsillitis: "Antibiotic therapy if bacterial; consider tonsillectomy for recurrent cases.",
+          Pharyngitis: "Gargle salt water and use throat sprays for symptomatic relief.",
+          "Strep Throat": "Follow a prescribed course of antibiotics to eliminate the infection and reduce complications."
+        }
+      },
+      vomiting: {
+        possibleDiagnoses: ["Gastroenteritis", "Pregnancy", "Appendicitis"],
+        signs: {
+          Gastroenteritis: "Nausea and vomiting with diarrhea; often caused by infection.",
+          Pregnancy: "Nausea, often in the morning; may include cravings and aversions.",
+          Appendicitis: "Nausea with referred pain in the lower right abdomen."
+        },
+        solutions: {
+          Gastroenteritis: "Stay hydrated with oral rehydration solutions; consult a healthcare provider if severe.",
+          Pregnancy: "Consider dietary adjustments and vitamin B6 supplementation to alleviate nausea.",
+          Appendicitis: "Seek immediate medical attention for potential surgical intervention."
+        }
+      },
+      diarrhea: {
+        possibleDiagnoses: ["Cholera", "Irritable Bowel Syndrome", "Food Poisoning"],
+        signs: {
+          Cholera: "Severe, watery diarrhea and dehydration, often after consuming contaminated water.",
+          "Irritable Bowel Syndrome": "Cramping, change in bowel habits; may alternate between diarrhea and constipation.",
+          "Food Poisoning": "Diarrhea with nausea and vomiting, usually after eating contaminated food."
+        },
+        solutions: {
+          Cholera: "Seek immediate medical attention and receive intravenous fluids for severe dehydration.",
+          "Irritable Bowel Syndrome": "Implement dietary changes, mindfulness practices, and consider medications tailored to symptoms.",
+          "Food Poisoning": "Monitor symptoms and rest; medical evaluation may be needed for severe cases."
+        }
+      },
+      "chest pain": {
+        possibleDiagnoses: ["Heart Attack", "Angina", "GERD"],
+        signs: {
+          "Heart Attack": "Crushing chest pain with radiating pain to the arm or jaw; sweating and nausea may occur.",
+          Angina: "Chest pain or discomfort during physical activity; tends to resolve with rest.",
+          GERD: "Burning sensation in the chest, often after meals; may include regurgitation."
+        },
+        solutions: {
+          "Heart Attack": "Call emergency services immediately; aspirin may help while waiting for assistance.",
+          Angina: "Use prescribed nitroglycerin for immediate relief and consult a cardiologist for further management.",
+          GERD: "Implement dietary changes and take proton pump inhibitors as advised by a healthcare provider."
+        }
+      },
+      "shortness of breath": {
+        possibleDiagnoses: ["Asthma", "COPD", "Pulmonary Embolism"],
+        signs: {
+          Asthma: "Wheezing and coughing, particularly at night or during exercise.",
+          COPD: "Progressive breathlessness; chronic cough with sputum production.",
+          "Pulmonary Embolism": "Sudden shortness of breath with chest pain; may cough up blood."
+        },
+        solutions: {
+          Asthma: "Use a rescue inhaler and have a written asthma action plan tailored to personal triggers.",
+          COPD: "Engage in pulmonary rehabilitation and use bronchodilators as prescribed.",
+          "Pulmonary Embolism": "Seek emergency care for antithrombotic treatment and possibly hospitalization."
+        }
+      },
+      rash: {
+        possibleDiagnoses: ["Allergic Reaction", "Eczema", "Chickenpox"],
+        signs: {
+          "Allergic Reaction": "Sudden onset of hives or welts; may include swelling of the face or lips.",
+          Eczema: "Chronic itchy rash, often in the creases of the elbows and knees.",
+          "Chickenpox": "Itchy, blister-like rash that progresses to scabs."
+        },
+        solutions: {
+          "Allergic Reaction": "Take antihistamines to reduce symptoms; seek emergency help for severe reactions.",
+          Eczema: "Use topical corticosteroids and moisturizers; identify and avoid triggers.",
+          "Chickenpox": "Consult a healthcare provider for antiviral treatments and focus on symptom relief."
+        }
+      },
+      "joint pain": {
+        possibleDiagnoses: ["Arthritis", "Gout", "Lupus"],
+        signs: {
+          Arthritis: "Joint stiffness and swelling, particularly after inactivity.",
+          Gout: "Intense pain in one joint, often the big toe; redness and swelling.",
+          Lupus: "Joint pain with a characteristic butterfly rash on the face and fatigue."
+        },
+        solutions: {
+          Arthritis: "Implement a structured exercise program and consider disease-modifying antirheumatic drugs (DMARDs).",
+          Gout: "Follow a low-purine diet and take medications to manage uric acid levels.",
+          Lupus: "Follow a tailored treatment plan from a rheumatologist, including immunosuppressive therapy."
+        }
+      },
+      "stomach ache": {
+        possibleDiagnoses: ["Ulcer", "Gastritis", "Appendicitis"],
+        signs: {
+          Ulcer: "Burning stomach pain that improves with eating; may include bloating.",
+          Gastritis: "Nausea and discomfort in the upper abdomen; may worsen with spicy foods.",
+          Appendicitis: "Intense pain in the lower right abdomen; may include fever and vomiting."
+        },
+        solutions: {
+          Ulcer: "Consult a healthcare provider for proton pump inhibitors and antibiotics if needed.",
+          Gastritis: "Avoid irritant foods; use antacids or medications for acid reduction as needed.",
+          Appendicitis: "Seek emergency treatment for assessment and possible surgical intervention."
+        }
+      },
+      "back pain": {
+        possibleDiagnoses: ["Herniated Disc", "Muscle Strain", "Arthritis"],
+        signs: {
+          "Herniated Disc": "Pain radiating down the leg; may cause numbness or tingling.",
+          "Muscle Strain": "Pain localized to the back; often linked to an activity or movement.",
+          Arthritis: "Chronic pain with stiffness; may worsen with inactivity."
+        },
+        solutions: {
+          "Herniated Disc": "Follow a physical therapy regimen; surgical interventions may be considered if conservative measures fail.",
+          "Muscle Strain": "Apply ice and rest; over-the-counter pain relief can help reduce discomfort.",
+          Arthritis: "Adapt lifestyle changes and engage in a maintenance physiotherapy program tailored to your needs."
+        }
+      },
+      "chills": {
+        possibleDiagnoses: ["Malaria", "Flu", "COVID-19"],
+        signs: {
+          Malaria: "Chills accompanied by sweating and high fever; may occur in cycles.",
+          Flu: "Chills with body aches and fatigue; sudden onset.",
+          "COVID-19": "Chills with fever, cough, and possible loss of taste or smell."
+        },
+        solutions: {
+          Malaria: "Immediate medical attention required for diagnostic tests and treatment.",
+          Flu: "Over-the-counter analgesics to reduce fever and body aches; rest and hydration are essential.",
+          "COVID-19": "Self-isolate and follow health protocols; consult healthcare providers as needed."
+        }
+      },
+      "night sweats": {
+        possibleDiagnoses: ["Tuberculosis", "Hyperthyroidism", "Lymphoma"],
+        signs: {
+          Tuberculosis: "Night sweats accompanied by cough, weight loss, and fatigue.",
+          Hyperthyroidism: "Night sweats with rapid heartbeat and heat intolerance.",
+          Lymphoma: "Night sweats with unexplained fever and swollen lymph nodes."
+        },
+        solutions: {
+          Tuberculosis: "Immediate medical evaluation, followed by a course of antibiotics.",
+          Hyperthyroidism: "Medication to manage thyroid hormone levels and regular monitoring.",
+          Lymphoma: "Seek specialized treatment from an oncologist, which may include chemotherapy or radiotherapy."
+        }
+      },
+      "swollen lymph nodes": {
+        possibleDiagnoses: ["Infection", "Mononucleosis", "Cancer"],
+        signs: {
+          Infection: "Local pain and tenderness; may accompany other infection signs.",
+          Mononucleosis: "Fatigue, sore throat, and fever paralleling swollen lymph nodes.",
+          Cancer: "Persistent swollen lymph nodes; may be accompanied by unexplained weight loss."
+        },
+        solutions: {
+          Infection: "Follow up with a healthcare provider to determine the underlying cause and appropriate treatment.",
+          Mononucleosis: "Rest, stay hydrated, and avoid physical activities that may risk spleen rupture.",
+          Cancer: "Seek immediate evaluation and establish a treatment plan based on specific diagnosis and stage."
+        }
+      },
+      "loss of appetite": {
+        possibleDiagnoses: ["Depression", "Gastrointestinal Disorder", "Hepatitis"],
+        signs: {
+          Depression: "Persistent sadness and loss of interest in activities; emotional changes.",
+          "Gastrointestinal Disorder": "Nausea or discomfort after eating; may involve abdominal pain.",
+          Hepatitis: "Loss of appetite with jaundice and abdominal discomfort."
+        },
+        solutions: {
+          Depression: "Engage in counseling and consider medication as advised by a mental health professional.",
+          "Gastrointestinal Disorder": "Consult a healthcare provider for diagnostic testing and personalized treatment.",
+          Hepatitis: "Regular monitoring and treatment plan tailored to the type of hepatitis diagnosed."
+        }
+      },
+      "blurred vision": {
+        possibleDiagnoses: ["Diabetes", "Glaucoma", "Cataracts"],
+        signs: {
+          Diabetes: "Blurred vision fluctuating with blood sugar levels; may include diabetic retinopathy.",
+          Glaucoma: "Gradual loss of peripheral vision; may have eye pain and headaches.",
+          Cataracts: "Cloudy vision with difficulty seeing at night and glare sensitivity."
+        },
+        solutions: {
+          Diabetes: "Strict control of blood sugar levels and routine ophthalmologic exams are crucial.",
+          Glaucoma: "Regular use of prescribed eye drops and monitoring to prevent vision loss.",
+          Cataracts: "Consult an ophthalmologist for evaluation and potential surgical intervention."
+        }
+      }
     };
 
     const diagnoseButton = document.getElementById('diagnose-button');
@@ -566,9 +612,19 @@
       const signs = diagnosisInfo.signs[condition];
       const solutionText = diagnosisInfo.solutions[condition] || "Consult a healthcare professional for further assistance.";
       
-      const detailsText = `Diagnosis: ${condition}\n\nSigns: ${signs}\n\nSolution: ${solutionText}`;
-      alert(detailsText); 
+      const detailsText = `<strong>Diagnosis:</strong> ${condition}<br><br><strong>Signs:</strong> ${signs}<br><br><strong>Solution:</strong> ${solutionText}`;
+      
+      const modalBody = document.getElementById('modal-body');
+      modalBody.innerHTML = detailsText;
+
+      const modal = document.getElementById('diagnosis-modal');
+      modal.style.display = 'flex';  // Show the modal
     } 
+
+    function closeModal() {
+      const modal = document.getElementById('diagnosis-modal');
+      modal.style.display = 'none';
+    }
   </script>
 </body>
 </html>
